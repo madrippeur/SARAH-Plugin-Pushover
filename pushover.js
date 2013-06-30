@@ -8,12 +8,18 @@ exports.action = function(data, callback, config){
     return;
   }
   
+  //Si data.device est vide, envoie à toutes les devices, sinon juste à celui concerné
+  if (data.device===""){
+    var data.device="all";
+  }
+
   // https://github.com/SamDecrock/node-pushover
   var pushover = require('./lib/pushover');
   pushover.send({  
     token: config.token,
     user: config.user,
     title: config.title,
+    device: data.device,
     message: data.push
   },
   
